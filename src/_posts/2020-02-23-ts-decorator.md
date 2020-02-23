@@ -146,7 +146,7 @@ function recorder(constructor: any) {
 }
 ```
 
-在 TypeScript 的类装饰器中，装饰器是一个函数，那么它的参数就是这个类，这里的 constructor 就是我们传入的 Car 类，我们用原型的方法把 driveRecorder 挂载到 constructor 而 constructor 的类型声明为 any，toyota 的类型为 Car，两个类型不一样，所以找不该 driveRecorder 方法报错，这里我们就临时改一下调用的方式(把 toyota 的类型临时改下)：
+在 TypeScript 的类装饰器中，装饰器是一个函数，那么它的参数就是这个类，这里的 constructor 就是我们传入的 Car 类，我们用原型的方法把 driveRecorder 挂载到 constructor 而 constructor 的类型声明为 any，toyota 的类型为 Car，两个类型不一样，所以找不该 driveRecorder 方法报错，这里我们就临时改一下调用的方式(把 toyota 的类型临时改成 any)：
 
 ```typescript
 (toyota as any).driveRecorder();
