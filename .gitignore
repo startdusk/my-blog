@@ -1,3 +1,6 @@
 /node_modules/
 /src/.vuepress/dist/
 /dist/
+2020-03-02-go-hot-restart.md
+2020-03-02-nodejs-hot-restart.md
+2020-03-05-ts-reflect-metadata.md
