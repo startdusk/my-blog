@@ -30,7 +30,7 @@ module.exports = {
       description: "Happy Coding<br/>Happy Life",
 
       // 电子邮箱
-      // email: "meteor.lxy@foxmail.com",
+      email: "clylia217@gmail.com",
 
       // 所在地
       location: "ShenZhen City, China",
