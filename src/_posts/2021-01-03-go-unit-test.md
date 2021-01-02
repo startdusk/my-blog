@@ -14,7 +14,7 @@ title: Golang：简单表格驱动测试
 想要对它进行表格测试，就像我们提交代码那样测试，我们只测试结果:)
 下面是该算法的一个答案：
 
-```golang
+```go
 func TwoSums(nums []int, target int) []int {
     dist := make(map[int]int)
 
@@ -38,7 +38,7 @@ func TwoSums(nums []int, target int) []int {
 </center>
 那我们的测试主要的输入和输出就有了如下结构体
 
-```golang
+```go
 struct {
     nums []int
     target int
@@ -48,7 +48,7 @@ struct {
 
 在 for 循环表格测试的时候，使用的 testing 包中的 Run 方法，该方法需要一个 name 和一个测试的 function，那我们的结构体又可以完整一下，如下：
 
-```golang
+```go
 struct {
     name string
     nums []int
@@ -59,7 +59,7 @@ struct {
 
 所以这个表格的样子就出来了：
 
-```golang
+```go
 cases := []struct{
     name string
     nums []int
@@ -74,7 +74,7 @@ cases := []struct{
 
 接下来就是用 for 循环遍历该表格测试：
 
-```golang
+```go
 for _, cc := range cases {
     t.Run(cc.name, func(t *testing.T){
         if got := TowSums(cc.nums, cc.target); !reflect.DeepEqual(got, tt.want) {
@@ -86,7 +86,7 @@ for _, cc := range cases {
 
 完整代码如下
 
-```golang
+```go
 func TestTwoSums(t *testing.T) {
 	cases := []struct {
 		name   string
@@ -112,7 +112,7 @@ func TestTwoSums(t *testing.T) {
 
 总结：Go 的表格驱动测试格式大致就是定义表格，for 循环执行测试，模板如下：
 
-```golang
+```go
 cases := []struct{
     name string
     xxx
