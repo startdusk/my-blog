@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Golang：使用 air 热重启 | BLOG</title>
+    <meta name="description" content="Home">
+    <meta name="generator" content="VuePress 1.3.1">
+    <link rel="preload" href="/my-blog/assets/css/0.styles.32c556b0.css" as="style"><link rel="preload" href="/my-blog/assets/js/app.4e0ad2bc.js" as="script"><link rel="preload" href="/my-blog/assets/js/16.5d959560.js" as="script"><link rel="preload" href="/my-blog/assets/js/9.8e3223be.js" as="script"><link rel="prefetch" href="/my-blog/assets/js/1.4d2a3388.js"><link rel="prefetch" href="/my-blog/assets/js/10.53ff55e8.js"><link rel="prefetch" href="/my-blog/assets/js/11.d16c2437.js"><link rel="prefetch" href="/my-blog/assets/js/12.6ae90bdb.js"><link rel="prefetch" href="/my-blog/assets/js/13.a66aca76.js"><link rel="prefetch" href="/my-blog/assets/js/14.6fae9997.js"><link rel="prefetch" href="/my-blog/assets/js/15.f7165285.js"><link rel="prefetch" href="/my-blog/assets/js/17.1eece021.js"><link rel="prefetch" href="/my-blog/assets/js/18.51075fbf.js"><link rel="prefetch" href="/my-blog/assets/js/19.7bb96085.js"><link rel="prefetch" href="/my-blog/assets/js/20.05267992.js"><link rel="prefetch" href="/my-blog/assets/js/21.c72e3acf.js"><link rel="prefetch" href="/my-blog/assets/js/22.ef0f8f08.js"><link rel="prefetch" href="/my-blog/assets/js/23.1a19ae3e.js"><link rel="prefetch" href="/my-blog/assets/js/24.aa9f08dd.js"><link rel="prefetch" href="/my-blog/assets/js/25.f5809217.js"><link rel="prefetch" href="/my-blog/assets/js/26.4b1a529a.js"><link rel="prefetch" href="/my-blog/assets/js/27.6b2b2236.js"><link rel="prefetch" href="/my-blog/assets/js/28.38dff348.js"><link rel="prefetch" href="/my-blog/assets/js/29.2d215a3c.js"><link rel="prefetch" href="/my-blog/assets/js/3.16154cc4.js"><link rel="prefetch" href="/my-blog/assets/js/30.85212e34.js"><link rel="prefetch" href="/my-blog/assets/js/4.d88f1300.js"><link rel="prefetch" href="/my-blog/assets/js/5.077a43dc.js"><link rel="prefetch" href="/my-blog/assets/js/6.a3ef734c.js"><link rel="prefetch" href="/my-blog/assets/js/7.c9392adb.js"><link rel="prefetch" href="/my-blog/assets/js/8.1d898696.js">
+    <link rel="stylesheet" href="/my-blog/assets/css/0.styles.32c556b0.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-meteorlxy"><header class="header" style="background-size:cover;background-repeat:no-repeat;background-position:center;background-attachment:scroll;background-image:url(https://s2.ax1x.com/2020/02/22/3Q4DWd.jpg);" data-v-7a046aea><div data-v-e4145d0a data-v-7a046aea><nav class="navbar" data-v-e4145d0a><div class="container" data-v-e4145d0a><a href="/my-blog/" class="router-link-active" data-v-e4145d0a><span class="navbar-site-name" data-v-e4145d0a>
+          BLOG
+        </span></a> <div class="navbar-toggler" data-v-e4145d0a><svg class="icon" style="font-size:1.2em;" data-v-e4145d0a data-v-e4145d0a><title data-v-e4145d0a data-v-e4145d0a>menu</title><use xlink:href="#icon-menu" data-v-e4145d0a data-v-e4145d0a></use></svg></div> <div class="navbar-links" data-v-e4145d0a><a href="/my-blog/" class="navbar-link" data-v-e4145d0a>
+            首页
+          </a><a href="/my-blog/posts/" class="navbar-link router-link-active" data-v-e4145d0a>
+            文章
+          </a><a href="https://www.jianshu.com/u/b0e71530db01" target="_blank" rel="noopener noreferrer" class="navbar-link" data-v-e4145d0a><span data-v-e4145d0a>简书</span> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound" data-v-e4145d0a data-v-e4145d0a><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><a href="https://github.com/startdusk" target="_blank" rel="noopener noreferrer" class="navbar-link" data-v-e4145d0a><span data-v-e4145d0a>Github</span> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound" data-v-e4145d0a data-v-e4145d0a><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div></div></nav> <div class="navbar-holder" style="display:none;" data-v-e4145d0a></div></div> <div class="banner" data-v-98d6aa8c data-v-7a046aea data-v-7a046aea><div class="container" data-v-98d6aa8c><div class="center" data-v-98d6aa8c><h1 data-v-98d6aa8c data-v-7a046aea>
+          Golang：使用 air 热重启
+        </h1></div></div></div></header> <div class="container clearfix show-aside" data-v-4dd605a1 data-v-4dd605a1><main class="main" data-v-4dd605a1><div class="post" data-v-4dd605a1 data-v-4dd605a1><section class="post-meta main-div" data-v-4e23451f><section class="post-date clearfix" data-v-4e23451f><span class="create-date" data-v-4e23451f>
+      发布时间 : 2020-03-16
+    </span> <span class="update-date" data-v-4e23451f>
+      最后修改 : Invalid Date
+    </span></section> <section class="post-links" data-v-4e23451f><a href="/my-blog/posts/2020/03/08/go-basic-auth-and-jwt.html" class="post-link" data-v-4e23451f>
+      上一篇 : Golang：BasicAuth + JWT 校验用户权限
+    </a> <a href="/my-blog/posts/2020/03/20/java-spring-lazy-to-ioc.html" class="post-link" data-v-4e23451f>
+      下一篇 : SpringBoot：使用 @Lazy 注解懒加载
+    </a></section></section> <article class="main-div"><div class="post-content content content__default"><h2 id="golang：使用-air-热重启"><a href="#golang：使用-air-热重启" class="header-anchor">#</a> Golang：使用 air 热重启</h2> <p>在 Web 开发中，热重启在很多地方都会用到，它能极大提升开发效率，在我们修改完代码后保存，就能自动重启运行得到最新的代码的运行结果，比如前端开发的 HMR 就是一个典型的例子。<br></p> <h3 id="go-语言中的热重启"><a href="#go-语言中的热重启" class="header-anchor">#</a> Go 语言中的热重启</h3> <p>在 Go 语言开发中实现热重启，推荐使用 <a href="https://github.com/cosmtrek/air" target="_blank" rel="noopener noreferrer">air<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> ，自 Go1.4 出来，官方就推荐使用 Go Modules 管理依赖，来进行模块化开发，那么我们就使用 Go Modules 构建我们的项目(注意：我使用的版本是 Go1.3)。首先创建一个项目目录如: go-restart ，然后进入目录，在该目录下执行终端命令初始化 Go Modules：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>go mod init github.com/startdusk/go-restart
+</code></pre></div><blockquote><p>注意 github.com/startdusk/go-restart 只是一个模块名，你可以把它命名成其他的命名</p></blockquote> <p>然后就会在目录下生成一个 go.mod 文件</p> <center><img src="/my-blog/assets/img/2020-03-02module.256c95c6.png" alt="" style="zoom:50%;"></center> <p>然后我们安装 <a href="https://github.com/cosmtrek/air" target="_blank" rel="noopener noreferrer">air<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> (注意：还是在当前目录下执行)</p> <div class="language-bash extra-class"><pre class="language-bash"><code>go get -v -u github.com/cosmtrek/air
+</code></pre></div><p>安装完成后，在终端执行 air ，有一下输出即为安装成功：</p> <center><img src="/my-blog/assets/img/2020-03-02run-result.622c587c.png" alt="" style="zoom:50%;"></center>
+我们先创建一个 main.go 文件，写点简单代码：
+<div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// main.go</span>
+<span class="token keyword">package</span> main
+<span class="token keyword">import</span> <span class="token string">&quot;fmt&quot;</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;air test&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>到这里，我们还需要创建一个 .air.conf
+的配置文件(.air.conf 是默认命名)。
+可以从 air 项目中的 <a href="https://github.com/cosmtrek/air/blob/master/air_example.conf" target="_blank" rel="noopener noreferrer">air_example.conf<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> 复制配置内容，进行一些修改。
+有几个要注意的地方：<br></p> <ul><li>1.[build] 下的 cmd 配置默认是 go build -o ./tmp/main .，很可能你需要修改，比我当前的项目就必须修改为 go build -o ./tmp/main github.com/startdusk/go-restart/main.go</li> <li>2.include_ext 和 exclude_dir 是配置避免监控不必要的文件和目录</li> <li>3.如果该项目有版本管理如 git ，要把 tmp 目录加入 .gitignore 中(因为运行 air 会生成的文件放在 tmp 文件夹中)</li> <li>4.如果出现 watch error, open tool many files…，说明要监控的文件太多，一方面确保修改了了 include_ext 和 exclude_dir，另一方面可以通过 ulimit -n 5000 调大进程允许打开的文件数</li></ul> <p>那么修改后的 .air.conf 文件就变为了：</p> <div class="language-toml extra-class"><pre class="language-toml"><code><span class="token comment"># Config file for [Air](https://github.com/cosmtrek/air) in TOML format</span>
+<span class="token comment"># Working directory</span>
+<span class="token comment"># . or absolute path, please note that the directories following must be under root.</span>
+<span class="token key property">root</span> <span class="token punctuation">=</span> <span class="token string">&quot;.&quot;</span>
+<span class="token key property">tmp_dir</span> <span class="token punctuation">=</span> <span class="token string">&quot;tmp&quot;</span>
+<span class="token punctuation">[</span><span class="token table class-name">build</span><span class="token punctuation">]</span>
+<span class="token comment"># Just plain old shell command. You could use `make` as well.</span>
+<span class="token key property">cmd</span> <span class="token punctuation">=</span> <span class="token string">&quot;go build -o ./tmp/main github.com/startdusk/go-restart/main.go&quot;</span>
+<span class="token comment"># Binary file yields from `cmd`.</span>
+<span class="token key property">bin</span> <span class="token punctuation">=</span> <span class="token string">&quot;tmp/main&quot;</span>
+<span class="token comment"># Customize binary.</span>
+<span class="token key property">full_bin</span> <span class="token punctuation">=</span> <span class="token string">&quot;APP_ENV=dev APP_USER=air ./tmp/main&quot;</span>
+<span class="token comment"># Watch these filename extensions.</span>
+<span class="token key property">include_ext</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">&quot;go&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;tpl&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;tmpl&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;html&quot;</span><span class="token punctuation">]</span>
+<span class="token comment"># Ignore these filename extensions or directories.</span>
+<span class="token key property">exclude_dir</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token string">&quot;assets&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;tmp&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;vendor&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;frontend/node_modules&quot;</span><span class="token punctuation">]</span>
+<span class="token comment"># Watch these directories if you specified.</span>
+<span class="token key property">include_dir</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token comment"># Exclude files.</span>
+<span class="token key property">exclude_file</span> <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token comment"># It's not necessary to trigger build each time file changes if it's too frequent.</span>
+<span class="token key property">delay</span> <span class="token punctuation">=</span> <span class="token number">1000</span> <span class="token comment"># ms</span>
+<span class="token comment"># Stop to run old binary when build errors occur.</span>
+<span class="token key property">stop_on_error</span> <span class="token punctuation">=</span> <span class="token boolean">true</span>
+<span class="token comment"># This log file places in your tmp_dir.</span>
+<span class="token key property">log</span> <span class="token punctuation">=</span> <span class="token string">&quot;air_errors.log&quot;</span>
+<span class="token punctuation">[</span><span class="token table class-name">log</span><span class="token punctuation">]</span>
+<span class="token comment"># Show log time</span>
+<span class="token key property">time</span> <span class="token punctuation">=</span> <span class="token boolean">false</span>
+<span class="token punctuation">[</span><span class="token table class-name">color</span><span class="token punctuation">]</span>
+<span class="token comment"># Customize each part's color. If no color found, use the raw app log.</span>
+<span class="token key property">main</span> <span class="token punctuation">=</span> <span class="token string">&quot;magenta&quot;</span>
+<span class="token key property">watcher</span> <span class="token punctuation">=</span> <span class="token string">&quot;cyan&quot;</span>
+<span class="token key property">build</span> <span class="token punctuation">=</span> <span class="token string">&quot;yellow&quot;</span>
+<span class="token key property">runner</span> <span class="token punctuation">=</span> <span class="token string">&quot;green&quot;</span>
+<span class="token punctuation">[</span><span class="token table class-name">misc</span><span class="token punctuation">]</span>
+<span class="token comment"># Delete tmp directory on exit</span>
+<span class="token key property">clean_on_exit</span> <span class="token punctuation">=</span> <span class="token boolean">true</span>
+</code></pre></div><p>此时目录结构为：</p> <center><img src="/my-blog/assets/img/2020-03-02dir.91368a32.png" alt="" style="zoom:50%;"></center>
+好了，到此我们可以在命令行运行代码：
+<div class="language-bash extra-class"><pre class="language-bash"><code>air
+</code></pre></div><p>然后输出：</p> <center><img src="/my-blog/assets/img/2020-03-16restart-result1.efc5e03d.png" alt="" style="zoom:50%;"></center> <p>程序成功运行，并且 air 在监听文件的变化
+，那我们尝试下改动下代码：</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// main.go</span>
+<span class="token keyword">package</span> main
+<span class="token keyword">import</span> <span class="token string">&quot;fmt&quot;</span>
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;air test&quot;</span><span class="token punctuation">)</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;air listen&quot;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>然后控制台输出：</p> <center><img src="/my-blog/assets/img/2020-03-16restart-result2.6d78f816.png" alt="" style="zoom:50%;"></center> <p>查看结果，air 成功监听到了文件的变化，并重新运行了程序。</p> <p>那么，上面的粉红色的输出一些异常，大家可以去看一下这个<a href="https://github.com/cosmtrek/air/issues/53" target="_blank" rel="noopener noreferrer">issue #53<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>，windows 平台会出现这个问题，但不是很影响使用。但这个 air 目前还不能配合 VSCode 热重启加调试模式使用(如 nodejs 的 nodemon+VSCode 是可以实现热重启加调试模式启动的)，有点遗憾。</p></div></article> <section class="post-meta main-div" data-v-4e23451f><section class="post-date clearfix" data-v-4e23451f><span class="create-date" data-v-4e23451f>
+      发布时间 : 2020-03-16
+    </span> <span class="update-date" data-v-4e23451f>
+      最后修改 : Invalid Date
+    </span></section> <section class="post-links" data-v-4e23451f><a href="/my-blog/posts/2020/03/08/go-basic-auth-and-jwt.html" class="post-link" data-v-4e23451f>
+      上一篇 : Golang：BasicAuth + JWT 校验用户权限
+    </a> <a href="/my-blog/posts/2020/03/20/java-spring-lazy-to-ioc.html" class="post-link" data-v-4e23451f>
+      下一篇 : SpringBoot：使用 @Lazy 注解懒加载
+    </a></section></section> <div id="post-comments" class="main-div"><!----></div></div></main> <aside class="aside" data-v-4dd605a1><div class="info-card main-div" data-v-9d847660 data-v-4dd605a1><div class="info-card-header" style="background-size:cover;background-repeat:no-repeat;background-position:center;background-attachment:scroll;background-image:url(/assets/img/bg.jpg);" data-v-9d847660><img src="https://s2.ax1x.com/2020/02/22/3QhWG9.jpg" alt="startdusk" class="info-avatar" data-v-9d847660></div> <div class="info-card-body" data-v-9d847660><section class="info-nickname" data-v-9d847660>
+      startdusk
+    </section> <section class="info-desc" data-v-9d847660>Happy Coding<br/>Happy Life</section> <section class="info-contact" data-v-9d847660><section data-v-9d847660><span title="ShenZhen City, China" data-v-9d847660 data-v-9d847660><svg class="icon" style="font-size:1em;" data-v-9d847660 data-v-9d847660><title data-v-9d847660 data-v-9d847660>ShenZhen City, China</title><use xlink:href="#icon-location" data-v-9d847660 data-v-9d847660></use></svg><span class="info-text" data-v-9d847660 data-v-9d847660>
+          ShenZhen City, China
+        </span></span></section> <!----> <section data-v-9d847660><a href="mailto:clylia217@gmail.com" title="clylia217@gmail.com" data-v-9d847660 data-v-9d847660><svg class="icon" style="font-size:1em;" data-v-9d847660 data-v-9d847660><title data-v-9d847660 data-v-9d847660>clylia217@gmail.com</title><use xlink:href="#icon-email" data-v-9d847660 data-v-9d847660></use></svg><span class="info-text" data-v-9d847660 data-v-9d847660>
+          clylia217@gmail.com
+        </span></a></section></section></div> <div class="info-card-footer" data-v-9d847660><section class="info-sns clearfix" data-v-9d847660><a href="https://github.com/startdusk" target="_blank" class="sns-link" data-v-9d847660><span title="GitHub: startdusk" class="sns-icon" data-v-9d847660 data-v-9d847660><svg class="icon" style="font-size:1.5em;" data-v-9d847660 data-v-9d847660><title data-v-9d847660 data-v-9d847660>GitHub: startdusk</title><use xlink:href="#icon-github" data-v-9d847660 data-v-9d847660></use></svg></span></a></section></div></div> <div class="post-nav-card main-div" style="position:relative;top:0;width:0px;" data-v-4dd605a1><div class="post-nav-contents"><svg class="icon"><title>book</title><use xlink:href="#icon-book"></use></svg> <span>文章目录</span> <div class="post-nav-toc"><ul><li><a href="/my-blog/posts/2020/03/16/go-hot-restart.html#golang：使用-air-热重启">Golang：使用 air 热重启</a><ul><li><a href="/my-blog/posts/2020/03/16/go-hot-restart.html#go-语言中的热重启">Go 语言中的热重启</a></li></ul></li></ul></div></div> <div class="post-nav-comments"><svg class="icon"><title>comment</title><use xlink:href="#icon-comment"></use></svg> <a href="/my-blog/posts/2020/03/16/go-hot-restart.html#post-comments">
+      评论
+    </a></div></div></aside></div> <footer class="footer" data-v-1375e54c><p class="footer-sns-links" data-v-1375e54c><a href="https://github.com/startdusk" target="_blank" class="sns-link" data-v-1375e54c><span title="GitHub: startdusk" class="sns-icon" data-v-1375e54c data-v-1375e54c><svg class="icon" style="font-size:25px;" data-v-1375e54c data-v-1375e54c><title data-v-1375e54c data-v-1375e54c>GitHub: startdusk</title><use xlink:href="#icon-github" data-v-1375e54c data-v-1375e54c></use></svg></span></a></p> <p class="footer-text" data-v-1375e54c><span data-v-1375e54c>Powered by </span> <a href="https://github.com/vuejs/vuepress" target="_blank" data-v-1375e54c>
+      VuePress
+    </a> <span data-v-1375e54c> | </span> <a href="https://github.com/meteorlxy/vuepress-theme-meteorlxy" target="_blank" data-v-1375e54c>
+        meteorlxy
+      </a></p> <p class="footer-text" data-v-1375e54c>Copyright 2020-present <a href="https://github.com/startdusk" target="_blank">startdusk</a> | MIT License</p></footer></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/my-blog/assets/js/app.4e0ad2bc.js" defer></script><script src="/my-blog/assets/js/16.5d959560.js" defer></script><script src="/my-blog/assets/js/9.8e3223be.js" defer></script>
+  </body>
+</html>

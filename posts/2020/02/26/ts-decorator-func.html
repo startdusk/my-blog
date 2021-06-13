@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TypeScript：方法装饰器 | BLOG</title>
+    <meta name="description" content="Home">
+    <meta name="generator" content="VuePress 1.3.1">
+    <link rel="preload" href="/my-blog/assets/css/0.styles.32c556b0.css" as="style"><link rel="preload" href="/my-blog/assets/js/app.4e0ad2bc.js" as="script"><link rel="preload" href="/my-blog/assets/js/16.5d959560.js" as="script"><link rel="preload" href="/my-blog/assets/js/7.c9392adb.js" as="script"><link rel="prefetch" href="/my-blog/assets/js/1.4d2a3388.js"><link rel="prefetch" href="/my-blog/assets/js/10.53ff55e8.js"><link rel="prefetch" href="/my-blog/assets/js/11.d16c2437.js"><link rel="prefetch" href="/my-blog/assets/js/12.6ae90bdb.js"><link rel="prefetch" href="/my-blog/assets/js/13.a66aca76.js"><link rel="prefetch" href="/my-blog/assets/js/14.6fae9997.js"><link rel="prefetch" href="/my-blog/assets/js/15.f7165285.js"><link rel="prefetch" href="/my-blog/assets/js/17.1eece021.js"><link rel="prefetch" href="/my-blog/assets/js/18.51075fbf.js"><link rel="prefetch" href="/my-blog/assets/js/19.7bb96085.js"><link rel="prefetch" href="/my-blog/assets/js/20.05267992.js"><link rel="prefetch" href="/my-blog/assets/js/21.c72e3acf.js"><link rel="prefetch" href="/my-blog/assets/js/22.ef0f8f08.js"><link rel="prefetch" href="/my-blog/assets/js/23.1a19ae3e.js"><link rel="prefetch" href="/my-blog/assets/js/24.aa9f08dd.js"><link rel="prefetch" href="/my-blog/assets/js/25.f5809217.js"><link rel="prefetch" href="/my-blog/assets/js/26.4b1a529a.js"><link rel="prefetch" href="/my-blog/assets/js/27.6b2b2236.js"><link rel="prefetch" href="/my-blog/assets/js/28.38dff348.js"><link rel="prefetch" href="/my-blog/assets/js/29.2d215a3c.js"><link rel="prefetch" href="/my-blog/assets/js/3.16154cc4.js"><link rel="prefetch" href="/my-blog/assets/js/30.85212e34.js"><link rel="prefetch" href="/my-blog/assets/js/4.d88f1300.js"><link rel="prefetch" href="/my-blog/assets/js/5.077a43dc.js"><link rel="prefetch" href="/my-blog/assets/js/6.a3ef734c.js"><link rel="prefetch" href="/my-blog/assets/js/8.1d898696.js"><link rel="prefetch" href="/my-blog/assets/js/9.8e3223be.js">
+    <link rel="stylesheet" href="/my-blog/assets/css/0.styles.32c556b0.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-meteorlxy"><header class="header" style="background-size:cover;background-repeat:no-repeat;background-position:center;background-attachment:scroll;background-image:url(https://s2.ax1x.com/2020/02/22/3Q4DWd.jpg);" data-v-7a046aea><div data-v-e4145d0a data-v-7a046aea><nav class="navbar" data-v-e4145d0a><div class="container" data-v-e4145d0a><a href="/my-blog/" class="router-link-active" data-v-e4145d0a><span class="navbar-site-name" data-v-e4145d0a>
+          BLOG
+        </span></a> <div class="navbar-toggler" data-v-e4145d0a><svg class="icon" style="font-size:1.2em;" data-v-e4145d0a data-v-e4145d0a><title data-v-e4145d0a data-v-e4145d0a>menu</title><use xlink:href="#icon-menu" data-v-e4145d0a data-v-e4145d0a></use></svg></div> <div class="navbar-links" data-v-e4145d0a><a href="/my-blog/" class="navbar-link" data-v-e4145d0a>
+            首页
+          </a><a href="/my-blog/posts/" class="navbar-link router-link-active" data-v-e4145d0a>
+            文章
+          </a><a href="https://www.jianshu.com/u/b0e71530db01" target="_blank" rel="noopener noreferrer" class="navbar-link" data-v-e4145d0a><span data-v-e4145d0a>简书</span> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound" data-v-e4145d0a data-v-e4145d0a><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><a href="https://github.com/startdusk" target="_blank" rel="noopener noreferrer" class="navbar-link" data-v-e4145d0a><span data-v-e4145d0a>Github</span> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound" data-v-e4145d0a data-v-e4145d0a><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div></div></nav> <div class="navbar-holder" style="display:none;" data-v-e4145d0a></div></div> <div class="banner" data-v-98d6aa8c data-v-7a046aea data-v-7a046aea><div class="container" data-v-98d6aa8c><div class="center" data-v-98d6aa8c><h1 data-v-98d6aa8c data-v-7a046aea>
+          TypeScript：方法装饰器
+        </h1></div></div></div></header> <div class="container clearfix show-aside" data-v-4dd605a1 data-v-4dd605a1><main class="main" data-v-4dd605a1><div class="post" data-v-4dd605a1 data-v-4dd605a1><section class="post-meta main-div" data-v-4e23451f><section class="post-date clearfix" data-v-4e23451f><span class="create-date" data-v-4e23451f>
+      发布时间 : 2020-02-26
+    </span> <span class="update-date" data-v-4e23451f>
+      最后修改 : Invalid Date
+    </span></section> <section class="post-links" data-v-4e23451f><a href="/my-blog/posts/2020/02/25/ts-decorator3.html" class="post-link" data-v-4e23451f>
+      上一篇 : TypeScript：类的装饰器(三)
+    </a> <a href="/my-blog/posts/2020/02/27/ts-decorator-accessor.html" class="post-link" data-v-4e23451f>
+      下一篇 : TypeScript：访问器装饰器
+    </a></section></section> <article class="main-div"><div class="post-content content content__default"><h2 id="typescript：方法装饰器"><a href="#typescript：方法装饰器" class="header-anchor">#</a> TypeScript：方法装饰器</h2> <p>在讲方法装饰器之前，我们先来回顾下面向对象，在类里边，有实例方法也有静态方法，那什么是实例方法，什么又是静态方法，所谓实例方法，就是说这个方法属于实例化后的对象，静态方法是属于类，它不会因为实例化而归属于某个对象：</p> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">Car</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;static run&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;instantiation run&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+Car<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 静态方法，打印出 static run</span>
+<span class="token keyword">const</span> c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Car</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+c<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 实例方法，打印出 instantiation run</span>
+</code></pre></div><h3 id="target-参数"><a href="#target-参数" class="header-anchor">#</a> target 参数</h3> <p>我们知道 TypeScript 类的装饰器可以接收一个参数，该参数为构造函数，而方法的装饰器要接收三个参数：</p> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token comment">// 方法装饰器</span>
+<span class="token keyword">function</span> <span class="token function">addDecorator</span><span class="token punctuation">(</span>
+  <span class="token parameter">target<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">,</span>
+  key<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  descriptor<span class="token operator">:</span> PropertyDescriptor</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Car</span> <span class="token punctuation">{</span>
+  @addDecorator
+  <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;run&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>方法装饰器表达式会在运行时当作函数被调用，当前装饰器作用于实例方法，运行代码会打印出：</p> <center><img src="/my-blog/assets/img/2020-02-25result.18d147b3.png" alt="" style="zoom:50%;"></center>
+此时，我们发现打印target出来的是对应的是Car类的 prototype 原型对象，那我们把装饰器装饰的方法改为静态方法：
+<div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token comment">// 方法装饰器</span>
+<span class="token keyword">function</span> <span class="token function">addDecorator</span><span class="token punctuation">(</span>
+  <span class="token parameter">target<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">,</span>
+  key<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  descriptor<span class="token operator">:</span> PropertyDescriptor</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Car</span> <span class="token punctuation">{</span>
+  @addDecorator
+  <span class="token keyword">static</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;run&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>此时代码运行的结果为：</p> <center><img src="/my-blog/assets/img/2020-02-25result2.7033f912.png" alt="" style="zoom:50%;"></center>
+此时，我们发现打印 target 出来的是对应的是Car的构造函数，那么<b>方法装饰器装饰在静态方法上，传入的target是类的构造函数，装饰在实例方法上，传入的target是类的原型对象</b> <h3 id="key-参数"><a href="#key-参数" class="header-anchor">#</a> key 参数</h3> <p>再来看下第二个参数 key，我们把它打印出来看看它是什么：</p> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token comment">// 方法装饰器</span>
+<span class="token keyword">function</span> <span class="token function">addDecorator</span><span class="token punctuation">(</span>
+  <span class="token parameter">target<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">,</span>
+  key<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  descriptor<span class="token operator">:</span> PropertyDescriptor</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Car</span> <span class="token punctuation">{</span>
+  @addDecorator
+  <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;run&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  @addDecorator
+  <span class="token function">go</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>运行结果为：</p> <center><img src="/my-blog/assets/img/2020-02-25result3.64751071.png" alt="" style="zoom:50%;"></center>
+那么，第二个参数key传进来的就是<b>装饰的方法的名字</b> <h3 id="descriptor-参数"><a href="#descriptor-参数" class="header-anchor">#</a> descriptor 参数</h3> <p>那 descriptor 是一个 PropertyDescriptor 的内置类型，那其实 PropertyDescriptor 对应着 JavaScript 的 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProp" target="_blank" rel="noopener noreferrer">Object.defineProperty()<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> 的第三个参数 descrideptor，通过 IDE 的功能可以发现它有以下属性，完全对应上，descrideptor 就是控制函数的属性</p> <center><img src="/my-blog/assets/img/2020-02-25tishi.9fc1436b.png" alt="" style="zoom:50%;"></center>
+既然 descrideptor 能够控制函数的属性，那么我们来尝试下修改下被装饰的函数的属性
+<div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token comment">// 方法装饰器</span>
+<span class="token keyword">function</span> <span class="token function">addDecorator</span><span class="token punctuation">(</span>
+  <span class="token parameter">target<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">,</span>
+  key<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  descriptor<span class="token operator">:</span> PropertyDescriptor</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  descriptor<span class="token punctuation">.</span><span class="token function-variable function">value</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;replace&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Car</span> <span class="token punctuation">{</span>
+  @addDecorator
+  <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;run&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Car</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+c<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>value 是指被装饰的函数，这里我们重写被装饰的函数，程序运行的结果将会是我们重写后函数的值</p> <center><img src="/my-blog/assets/img/2020-02-25result4.86f9b4de.png" alt="" style="zoom:50%;"></center>
+除了在装饰器里边修改函数，我们也可以在函数外部修改函数，如：
+<div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token comment">// 方法装饰器</span>
+<span class="token keyword">function</span> <span class="token function">addDecorator</span><span class="token punctuation">(</span>
+  <span class="token parameter">target<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">,</span>
+  key<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  descriptor<span class="token operator">:</span> PropertyDescriptor</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Car</span> <span class="token punctuation">{</span>
+  @addDecorator
+  <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;run&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Car</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+c<span class="token punctuation">.</span><span class="token function-variable function">run</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;replace&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+c<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>对于在外部覆盖原有的函数，有时候我们不希望它发生，特别是在一些底层细节上，我们希望严格一些，外面用的人它不能随意修改内部的东西，那么我们可以使用 writable :</p> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token comment">// 方法装饰器</span>
+<span class="token keyword">function</span> <span class="token function">addDecorator</span><span class="token punctuation">(</span>
+  <span class="token parameter">target<span class="token operator">:</span> <span class="token builtin">any</span><span class="token punctuation">,</span>
+  key<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  descriptor<span class="token operator">:</span> PropertyDescriptor</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  descriptor<span class="token punctuation">.</span>writable <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 设置禁止修改</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">Car</span> <span class="token punctuation">{</span>
+  @addDecorator
+  <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;run&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Car</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+c<span class="token punctuation">.</span><span class="token function-variable function">run</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;replace&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+c<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>writable 就是设置函数的属性是否可写，这里我们设置为 false。
+有了 <b>descriptor.writable = false</b> 这一行代码，我们就能有效的保护函数不被外部修改，当运行上面的代码后，会报错，并给我们明确的提示：</p> <center><img src="/my-blog/assets/img/2020-02-25result5.5bbd6380.png" alt="" style="zoom:50%;"></center></div></article> <section class="post-meta main-div" data-v-4e23451f><section class="post-date clearfix" data-v-4e23451f><span class="create-date" data-v-4e23451f>
+      发布时间 : 2020-02-26
+    </span> <span class="update-date" data-v-4e23451f>
+      最后修改 : Invalid Date
+    </span></section> <section class="post-links" data-v-4e23451f><a href="/my-blog/posts/2020/02/25/ts-decorator3.html" class="post-link" data-v-4e23451f>
+      上一篇 : TypeScript：类的装饰器(三)
+    </a> <a href="/my-blog/posts/2020/02/27/ts-decorator-accessor.html" class="post-link" data-v-4e23451f>
+      下一篇 : TypeScript：访问器装饰器
+    </a></section></section> <div id="post-comments" class="main-div"><!----></div></div></main> <aside class="aside" data-v-4dd605a1><div class="info-card main-div" data-v-9d847660 data-v-4dd605a1><div class="info-card-header" style="background-size:cover;background-repeat:no-repeat;background-position:center;background-attachment:scroll;background-image:url(/assets/img/bg.jpg);" data-v-9d847660><img src="https://s2.ax1x.com/2020/02/22/3QhWG9.jpg" alt="startdusk" class="info-avatar" data-v-9d847660></div> <div class="info-card-body" data-v-9d847660><section class="info-nickname" data-v-9d847660>
+      startdusk
+    </section> <section class="info-desc" data-v-9d847660>Happy Coding<br/>Happy Life</section> <section class="info-contact" data-v-9d847660><section data-v-9d847660><span title="ShenZhen City, China" data-v-9d847660 data-v-9d847660><svg class="icon" style="font-size:1em;" data-v-9d847660 data-v-9d847660><title data-v-9d847660 data-v-9d847660>ShenZhen City, China</title><use xlink:href="#icon-location" data-v-9d847660 data-v-9d847660></use></svg><span class="info-text" data-v-9d847660 data-v-9d847660>
+          ShenZhen City, China
+        </span></span></section> <!----> <section data-v-9d847660><a href="mailto:clylia217@gmail.com" title="clylia217@gmail.com" data-v-9d847660 data-v-9d847660><svg class="icon" style="font-size:1em;" data-v-9d847660 data-v-9d847660><title data-v-9d847660 data-v-9d847660>clylia217@gmail.com</title><use xlink:href="#icon-email" data-v-9d847660 data-v-9d847660></use></svg><span class="info-text" data-v-9d847660 data-v-9d847660>
+          clylia217@gmail.com
+        </span></a></section></section></div> <div class="info-card-footer" data-v-9d847660><section class="info-sns clearfix" data-v-9d847660><a href="https://github.com/startdusk" target="_blank" class="sns-link" data-v-9d847660><span title="GitHub: startdusk" class="sns-icon" data-v-9d847660 data-v-9d847660><svg class="icon" style="font-size:1.5em;" data-v-9d847660 data-v-9d847660><title data-v-9d847660 data-v-9d847660>GitHub: startdusk</title><use xlink:href="#icon-github" data-v-9d847660 data-v-9d847660></use></svg></span></a></section></div></div> <div class="post-nav-card main-div" style="position:relative;top:0;width:0px;" data-v-4dd605a1><div class="post-nav-contents"><svg class="icon"><title>book</title><use xlink:href="#icon-book"></use></svg> <span>文章目录</span> <div class="post-nav-toc"><ul><li><a href="/my-blog/posts/2020/02/26/ts-decorator-func.html#typescript：方法装饰器">TypeScript：方法装饰器</a><ul><li><a href="/my-blog/posts/2020/02/26/ts-decorator-func.html#target-参数">target 参数</a></li><li><a href="/my-blog/posts/2020/02/26/ts-decorator-func.html#key-参数">key 参数</a></li><li><a href="/my-blog/posts/2020/02/26/ts-decorator-func.html#descriptor-参数">descriptor 参数</a></li></ul></li></ul></div></div> <div class="post-nav-comments"><svg class="icon"><title>comment</title><use xlink:href="#icon-comment"></use></svg> <a href="/my-blog/posts/2020/02/26/ts-decorator-func.html#post-comments">
+      评论
+    </a></div></div></aside></div> <footer class="footer" data-v-1375e54c><p class="footer-sns-links" data-v-1375e54c><a href="https://github.com/startdusk" target="_blank" class="sns-link" data-v-1375e54c><span title="GitHub: startdusk" class="sns-icon" data-v-1375e54c data-v-1375e54c><svg class="icon" style="font-size:25px;" data-v-1375e54c data-v-1375e54c><title data-v-1375e54c data-v-1375e54c>GitHub: startdusk</title><use xlink:href="#icon-github" data-v-1375e54c data-v-1375e54c></use></svg></span></a></p> <p class="footer-text" data-v-1375e54c><span data-v-1375e54c>Powered by </span> <a href="https://github.com/vuejs/vuepress" target="_blank" data-v-1375e54c>
+      VuePress
+    </a> <span data-v-1375e54c> | </span> <a href="https://github.com/meteorlxy/vuepress-theme-meteorlxy" target="_blank" data-v-1375e54c>
+        meteorlxy
+      </a></p> <p class="footer-text" data-v-1375e54c>Copyright 2020-present <a href="https://github.com/startdusk" target="_blank">startdusk</a> | MIT License</p></footer></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/my-blog/assets/js/app.4e0ad2bc.js" defer></script><script src="/my-blog/assets/js/16.5d959560.js" defer></script><script src="/my-blog/assets/js/7.c9392adb.js" defer></script>
+  </body>
+</html>
